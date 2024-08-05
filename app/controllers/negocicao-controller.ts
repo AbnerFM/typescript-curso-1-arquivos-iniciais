@@ -10,18 +10,18 @@ export class NegocicacaoController {
     private inputQuantidade: HTMLInputElement;
     private inputValor: HTMLInputElement;
     private negociacoes = new Negociacoes();
-    private negociacoesView = new NegociacoesView("#negocicoesView");
-    private mensagemView = new MensagemView('#mensagemView');
+    private negociacoesView = new NegociacoesView("#negocicoesView", true);
+    private mensagemView = new MensagemView('#mensagemView' );
 
     public constructor() {
-        this.inputData = document.querySelector("#data");
-        this.inputQuantidade = document.querySelector("#quantidade");
-        this.inputValor = document.querySelector("#valor");
+        this.inputData = document.querySelector("#data") as HTMLInputElement;
+        this.inputQuantidade = document.querySelector("#quantidade") as HTMLInputElement;
+        this.inputValor = <HTMLInputElement>document.querySelector("#valor") // pode ser escrito das duas formas;
         this.negociacoesView.update(this.negociacoes);
     }
 
     public adiciona(): void {
-        const negociacao = this.criaNecociacao();
+        const negociacao = Negociacao.criaDe(this.inputData.value, this.inputQuantidade.value, this.inputValor.value);
         if (!this.ehDiaUtil(negociacao.data)) {
             this.mensagemView.update("So é permitido alocar negociações em dias uteis");
             return;
