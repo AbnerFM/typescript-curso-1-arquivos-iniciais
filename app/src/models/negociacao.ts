@@ -1,4 +1,6 @@
-export class Negociacao {
+import { Imprimivel } from "../utils/imprimivel.js";
+
+export class Negociacao extends Imprimivel{
 
     // private _data: Date;
     // private _quantidade: number;
@@ -10,11 +12,9 @@ export class Negociacao {
     //     this._valor = valor;
     // }
 
-    public constructor(
-        private _data: Date,
-        private _quantidade: number,
-        private _valor: number
-    ) { }
+    public constructor(private _data: Date, private _quantidade: number, private _valor: number) { 
+        super();
+    }
 
     public get data(): Date {
         const data = new Date(this._data.getTime())
@@ -33,7 +33,11 @@ export class Negociacao {
         return this._valor * this._quantidade;
     }
 
-    public static criaDe(dataString: string, quantidadeString: string, valorString: string): Negociacao{
+    public paraTexto(): string {
+        return ` Data: ${this.data}, Quantidade: ${this.quantidade}, Valor: ${this.valor}`
+    }
+
+    public static criaDe(dataString: string, quantidadeString: string, valorString: string): Negociacao {
         const exp = /-/g;
         const date = new Date(dataString.replace(exp, ","));
         const quantidade = parseInt(quantidadeString);
